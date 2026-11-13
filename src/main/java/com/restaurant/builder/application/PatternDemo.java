@@ -23,10 +23,11 @@ public final class PatternDemo {
         System.out.println("2. Decorator: ExtraCheese + Olives wrapped that Meal: " + order.items().getFirst().name());
         System.out.println("3. Builder: immutable order " + order.id() + " assembled and validated.");
         System.out.println("4. Strategy: pickup 20%: " + order.subtotal() + " - " + order.discount() + " = " + order.total() + " KZT.");
-        System.out.println("5. Bridge: customer and kitchen documents share interchangeable text/HTML renderers.");
+        System.out.println("5. Bridge: customer and kitchen documents share interchangeable text/HTML/JSON renderers.");
         for (String type : List.of("customer", "kitchen")) {
             System.out.println(service.receipt(order.id(), "text", type, book).body());
             if (!service.receipt(order.id(), "html", type, book).body().contains("<!doctype html>")) throw new IllegalStateException("HTML receipt failed");
+            if (!service.receipt(order.id(), "json", type, book).body().startsWith("{\"title\":")) throw new IllegalStateException("JSON receipt failed");
         }
         System.out.println("6. Observer: kitchen and customer receive every status transition.");
         for (int step = 0; step < 3; step++) order = service.advance(order.id(), book);
