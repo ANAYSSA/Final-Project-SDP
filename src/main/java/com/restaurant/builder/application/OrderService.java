@@ -71,7 +71,8 @@ public final class OrderService {
         ReceiptRenderer renderer = switch (format) {
             case "text" -> new TextReceiptRenderer();
             case "html" -> new HtmlReceiptRenderer();
-            default -> throw new IllegalArgumentException("Receipt format must be text or html");
+            case "json" -> new JsonReceiptRenderer();
+            default -> throw new IllegalArgumentException("Receipt format must be text, html or json");
         };
         ReceiptDocument document = switch (type) {
             case "customer" -> new CustomerReceipt(renderer);
