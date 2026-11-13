@@ -1,6 +1,6 @@
 # UML diagrams
 
-These diagrams describe the Java implementation in `src/main/java/com/restaurant/`. They show the main pattern roles and selected methods rather than every accessor or helper. Names are taken from the actual source; future contribution tasks are not depicted as completed features.
+These diagrams describe the Java implementation in `src/main/java/com/restaurant/`. They show the main pattern roles and selected methods rather than every accessor or helper. Names are taken from the merged source. The diagrams include FamilyDiscount, JsonReceiptRenderer, HerbsDecorator and OperationsDashboardObserver from the two team pull requests.
 
 | Diagram | Source | Rendered copies |
 | --- | --- | --- |
@@ -21,4 +21,8 @@ java -Djava.awt.headless=true -jar /path/to/plantuml.jar -tpng docs/uml/*.puml
 java -Djava.awt.headless=true -jar /path/to/plantuml.jar -tsvg docs/uml/*.puml
 ```
 
-The class diagrams use PlantUML's embedded Smetana layout, so no Graphviz executable is required. These copies were generated with PlantUML 1.2026.10 and Java 21. Use PNGs in the report and SVGs for zoomable source review. Re-render and inspect the output whenever a diagram changes; update the report after teammate extensions modify the implemented classes.
+The class diagrams use PlantUML's embedded Smetana layout, so no Graphviz executable is required. These copies were generated with PlantUML 1.2026.10 and Java 21. Use PNGs in the report and SVGs for zoomable source review. Re-render and inspect the output whenever a diagram changes. All diagrams use black text and outlines on white backgrounds.
+
+## Compact report diagrams
+
+The `report-*.puml` files are simplified class diagrams for the short PDF report. They show the essential pattern roles and one representative concrete class; notes identify other implemented variants. Corresponding PNG and SVG files are included. Omitted accessors and helper classes are shown in the full diagrams above.

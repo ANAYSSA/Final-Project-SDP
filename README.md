@@ -37,7 +37,9 @@ python3 scripts/check_structure.py
 | Akmaral | Strategy, Bridge | Behavioral, structural |
 | Mukhammad | Observer, Decorator | Behavioral, structural |
 
-This table records the agreed responsibilities. The initial integrated baseline is committed under Anuar's authenticated Git identity. It is **not evidence that every member has individually completed their two patterns**. Akmaral and Mukhammad must implement, test and commit their own contributions before submission. See [team tasks and agent prompts](docs/TEAM_TASKS.md).
+All three members' implementation commits are preserved in `main`. Anuar's initial application is in `954a3c8`. Akmaral added `FamilyDiscount` and `JsonReceiptRenderer` in [PR #1](https://github.com/ANAYSSA/Final-Project-SDP/pull/1), merged as `e505627`. Mukhammad added `HerbsDecorator` and `OperationsDashboardObserver` in [PR #2](https://github.com/ANAYSSA/Final-Project-SDP/pull/2), merged as `a91e948`. See [team contributions](docs/TEAM_TASKS.md) and the individual notes in `docs/contributions/`.
+
+The merged application passes **88 Java tests**. FAMILY gives 15% off an item subtotal of at least 6000 KZT. Herbs adds 150 KZT per unit; up to three toppings can be selected. Customer and kitchen receipts support text, HTML and JSON. Status changes notify customer, kitchen and operations observers.
 
 ## Structure
 
@@ -56,11 +58,11 @@ Pattern roles live in explicit subfolders. `Main` is the only Java source direct
 
 ## Documentation
 
-- [English PDF report: 15 pages, Java excerpts and screenshots](docs/REPORT.pdf)
+- [English PDF report: four pages, plain black and white](docs/REPORT.pdf)
 - [UML: six class diagrams and an integrated sequence](docs/uml/README.md)
 - [Verification evidence](docs/VALIDATION.md)
 - [Requirements and submission checklist](docs/REQUIREMENTS.md)
-- [Team contributions and copy/paste agent prompts](docs/TEAM_TASKS.md)
+- [Team contributions and completed task records](docs/TEAM_TASKS.md)
 - [Defense guide: OOP, SOLID and patterns](docs/DEFENSE_GUIDE.md)
 - [Deployment and maintenance](docs/DEPLOYMENT.md)
 
@@ -70,4 +72,4 @@ The project continues Anuar's pizzeria exercises: [Builder](https://github.com/A
 
 ## Regenerate the report
 
-After rerunning tests and updating screenshots, install optional Python `reportlab` and run `python3 scripts/build_report.py`. The generator reads current Java excerpts, Surefire results, UML figures and captured screenshots. See `docs/uml/README.md` to regenerate UML. Refresh the factual contribution statement after merging teammate work.
+After rerunning tests and updating screenshots, install optional Python `reportlab` and run `python3 scripts/build_report.py`. The generator reads current Java excerpts, Surefire results, UML figures and captured screenshots. See `docs/uml/README.md` to regenerate UML. Regenerate the report and source ZIP whenever the submitted code changes so all files describe the same revision.

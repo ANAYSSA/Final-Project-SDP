@@ -1,0 +1,36 @@
+@startuml
+!pragma layout smetana
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam roundcorner 0
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 18
+skinparam defaultFontColor black
+skinparam ArrowColor black
+skinparam ArrowThickness 1.5
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor white
+skinparam classBorderColor black
+skinparam noteBackgroundColor white
+skinparam noteBorderColor black
+skinparam noteFontSize 18
+skinparam nodesep 20
+skinparam ranksep 20
+hide circle
+hide empty members
+class OrderProgress {
+  +subscribe()
+  +advance()
+}
+interface OrderObserver {
+  +onStatusChanged()
+}
+class "OperationsDashboardObserver" as Operations
+OrderProgress o--> OrderObserver : notifies
+OrderObserver <|.. Operations
+note bottom of Operations
+Also CustomerObserver
+and KitchenObserver.
+end note
+@enduml

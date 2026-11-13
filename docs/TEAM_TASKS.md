@@ -1,12 +1,18 @@
-# Team implementation tasks
+# Team contributions and completed tasks
 
-These prompts are intended for each student's own AI-assisted development session. Each student must inspect, understand, implement, test and explain their changes. The existing baseline was committed under Anuar's identity; it does not establish the other students' individual contributions. Do not fabricate authorship or replace another person's Git identity.
+Both teammate tasks below are complete and merged. The original prompts are retained as a record of the assigned work; they are not outstanding instructions.
 
-The tasks below are substantive extensions to each student's assigned pair of patterns. They provide reviewable evidence of implementation, but the team must still demonstrate to the lecturer that each student has personally implemented and understands two patterns. Keep the final contribution statement factual.
+| Member | Completed work | Commit evidence |
+| --- | --- | --- |
+| Anuar (`ANAYSSA`) | Initial application, Builder and Factory Method; integration and deployment | `954a3c8` and subsequent integration commits |
+| Akmaral (`Akma`, GitHub `arynttai`) | FAMILY discount strategy, JSON receipt renderer and tests | `1debe3f`, `7475264`; [PR #1](https://github.com/ANAYSSA/Final-Project-SDP/pull/1), merged as `e505627` |
+| Mukhammad (`Vertex`, GitHub `Vertex-blip`) | Herbs decorator, session-scoped operations observer and tests | `f51cc9c`, `b2e5b55`; [PR #2](https://github.com/ANAYSSA/Final-Project-SDP/pull/2), merged as `a91e948` |
 
-## Akmaral — Strategy and Bridge
+The PRs were merged with merge commits, preserving the original authors. Detailed implementation notes remain in [AKMARAL.md](contributions/AKMARAL.md) and [MUKHAMMAD.md](contributions/MUKHAMMAD.md). See [VALIDATION.md](VALIDATION.md) for combined verification. Each member must still understand and defend their changes; commits do not establish that the oral defense or individual Moodle submission has happened.
 
-Copy this prompt into your development agent:
+## Completed task: Akmaral - Strategy and Bridge
+
+Original task prompt, retained for the project record:
 
 ```text
 I am Akmaral, a member of the Restaurant Ordering System final project team.
@@ -76,9 +82,9 @@ Do not merge or squash the PR yourself. Return the branch, commit hashes,
 PR URL and a short defense explanation I can rehearse.
 ```
 
-## Mukhammad — Observer and Decorator
+## Completed task: Mukhammad - Observer and Decorator
 
-Copy this prompt into your development agent:
+Original task prompt, retained for the project record:
 
 ```text
 I am Mukhammad, a member of the Restaurant Ordering System final project team.
@@ -161,10 +167,8 @@ squash it yourself. Return the branch, commit hashes, PR URL and a short
 defense explanation I can rehearse.
 ```
 
-## Integration and author history
+## Final team check
 
-Anuar reviews both pull requests, runs the complete verification suite on the combined result, resolves overlapping registration changes and updates the final report. Use a merge commit or another merge method that preserves the original student authors. Avoid replacing the students' commits with a single Anuar-authored commit. Never force-push shared `main` to manufacture a contribution history.
+The implementation tasks are merged. Before submission, use the final tested revision and matching report/source ZIP. Inspect `git log --format='%h %an <%ae> %s'` and the actual diffs when presenting individual work. Each member should explain their two pattern implementations, tests and interactions with the application.
 
-After merging, inspect `git log --format='%h %an <%ae> %s'` and `git shortlog -sne --all`, then inspect the actual changed files. A visible contribution chart or a commit count alone is not sufficient evidence of implementing two patterns. Each teammate must be able to explain their assigned contracts, concrete implementations, tests and runtime behavior.
-
-The tasks deliberately avoid frontend redesign. The frontend should discover toppings and discounts from the menu API. If it does not, make the smallest integration change after coordinating the two PRs. JSON receipts can be demonstrated with the existing receipt URL and `format=json` without a separate page.
+Every student must submit the PDF report, source ZIP and GitHub link personally by the course deadline. The defense and individual submissions remain student responsibilities.

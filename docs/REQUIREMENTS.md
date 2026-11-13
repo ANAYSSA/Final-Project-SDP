@@ -1,77 +1,64 @@
 # Requirements and submission checklist
 
-Hearth & Table is a Java Restaurant Ordering System with an HTML, CSS and JavaScript interface served by Spring Boot. The course requirements come from **Final Project Defense Requirements.pdf** (especially page 1) and the additional requirements supplied by the team. The topic examples on pages 2–4 and reading suggestions on page 5 are supporting material, not additional mandatory features.
+The requirements come from page 1 of **Final Project Defense Requirements.pdf** and the additional course instructions. The topic examples and suggested reading are supporting material.
 
-This checklist distinguishes software evidence from work that the students must complete themselves. A functioning baseline does not establish that all three students have individually implemented their two patterns.
+## Team work
 
-## Pattern ownership and integration
+| Student | Patterns | Implementation evidence |
+| --- | --- | --- |
+| Anuar | Builder, Factory Method | Integrated application and initial implementations in `954a3c8` (`ANAYSSA`) |
+| Akmaral | Strategy, Bridge | `FamilyDiscount` in `1debe3f`; `JsonReceiptRenderer` in `7475264` (`Akma`, GitHub `arynttai`) |
+| Mukhammad | Decorator, Observer | `HerbsDecorator` in `f51cc9c`; `OperationsDashboardObserver` in `b2e5b55` (`Vertex`, GitHub `Vertex-blip`) |
 
-| Student | Assigned patterns | Categories | Intended behavior |
-| --- | --- | --- | --- |
-| Anuar | Builder; Factory Method | Creational; creational | Construct validated orders; create different menu products through concrete creators |
-| Akmaral | Strategy; Bridge | Behavioral; structural | Select a discount algorithm; vary receipt purpose independently from output format |
-| Mukhammad | Observer; Decorator | Behavioral; structural | Notify subscribers about order status; compose extra toppings and prices |
-
-The initial integrated baseline is committed under Anuar's configured Git identity. It is **not** evidence of commits or completed individual implementation by Akmaral or Mukhammad. Their substantive implementation, tests, explanations and commits remain required. See [TEAM_TASKS.md](TEAM_TASKS.md) for separate follow-up work. Do not rewrite author fields, backdate commits or create empty commits to simulate contributions.
+[PR #1](https://github.com/ANAYSSA/Final-Project-SDP/pull/1) and [PR #2](https://github.com/ANAYSSA/Final-Project-SDP/pull/2) were reviewed and merged with merge commits `e505627` and `a91e948`. The original student commits remain in the history. Their explanations are in [AKMARAL.md](contributions/AKMARAL.md) and [MUKHAMMAD.md](contributions/MUKHAMMAD.md). Each student still needs to explain their work at the defense.
 
 ## Requirement-to-evidence map
 
-| Source | Requirement | Evidence to inspect / completion action |
-| --- | --- | --- |
-| PDF, page 1 | Team project, preferably 2–3 students | Three named team members above |
-| PDF, page 1 | Every student individually implements at least two patterns | Inspect each person's actual changes and original Git author history; teammate work is still pending after the baseline |
-| PDF, page 1 | At least six distinct patterns | Builder, Factory Method, Strategy, Bridge, Observer and Decorator; inspect the six matching packages |
-| PDF, page 1 | Patterns operate within one cohesive application | Run the full ordering flow: product creation → toppings → order construction → discount → status notifications → receipt rendering |
-| PDF, page 1 | All patterns demonstrably operational | Run `Main --demo`, the automated tests and the browser demonstration described in [DEFENSE_GUIDE.md](DEFENSE_GUIDE.md) |
-| Additional | At least one creational, structural and behavioral pattern | Two patterns in each category, as listed above |
-| Additional | Clean Code, SOLID, KISS and DRY | Explain specific classes and extension points; use the examples in the defense guide instead of unsupported compliance claims |
-| Additional | Correct package hierarchy; six pattern packages; only `Main` outside | Check production Java sources: `com.restaurant.Main` is the only class at the package root; other classes belong under the six pattern packages and role subpackages |
-| Additional | Git repository with all members' commit histories | Public repository: https://github.com/ANAYSSA/Final-Project-SDP ; inspect authors and substantive changes after merging teammates' branches |
-| PDF, page 1 | Report includes introduction, body, conclusion and further work | [REPORT.pdf](REPORT.pdf), 15 pages; update after teammate changes |
-| PDF, page 1 | Report includes Java/Go code, application screenshots and UML diagrams | Java excerpts and real screenshots in the report; six class diagrams and one sequence in [uml/](uml/README.md) |
-| PDF, page 1 | PDF report and zipped source code uploaded to Moodle | Each student uploads the finished PDF and source ZIP; a GitHub link alone does not replace the ZIP |
-| Additional | Every student submits on time; no late submissions | Each student verifies their own Moodle submission and the course's published deadline |
-| PDF, page 1; grading criteria | Oral defense before teaching staff; OOP and patterns questions | Each student rehearses their two assigned patterns and the complete application flow |
+| Requirement | Evidence or remaining action |
+| --- | --- |
+| At least six distinct patterns in one project | Builder, Factory Method, Strategy, Bridge, Observer and Decorator cooperate in the ordering flow. |
+| At least one pattern of each category | Two creational, two structural and two behavioral patterns. |
+| Each student implements at least two patterns | Pattern assignments, implementation commits and merged PRs are listed above. Review the code changes as well as the author history. |
+| All patterns demonstrably operational | Run the test suite, `Main --demo` and the browser scenario in [DEFENSE_GUIDE.md](DEFENSE_GUIDE.md). |
+| Clean Code, SOLID, KISS and DRY | Separate creation, pricing, rendering and notification contracts; shared server-side quote/order calculations; explicit validation. |
+| Six pattern packages and only `Main` outside them | Run `python3 scripts/check_structure.py`. `Main.java` is the only source directly in `com.restaurant`. |
+| Git repository and all members' commit history | [Final-Project-SDP](https://github.com/ANAYSSA/Final-Project-SDP); merge commits preserve all three authors' work. |
+| Report with introduction, body, conclusion and further work | The updated [REPORT.pdf](REPORT.pdf) is a four-page report. |
+| Java code, application screenshots and UML | Included in the report; editable UML and larger figures are in [uml/](uml/README.md). |
+| PDF report and source ZIP submitted to Moodle | Every student must upload the final report and source ZIP, and provide the GitHub link. A link does not replace the ZIP. |
+| No late submission | Check the actual Moodle deadline and confirm each student's upload. No deadline date was supplied with the project material. |
+| Oral defense on OOP and patterns | Rehearse the assigned patterns, their interactions and the application limits. Defense completion is not established by the code or commits. |
 
-The material supplied with this project does **not** state an actual deadline date or time. Use the deadline shown in Moodle or provided by the lecturer; do not infer it from repository timestamps.
-
-## Package rule
-
-The production source root is `src/main/java/com/restaurant/`:
+## Package structure
 
 ```text
-com/restaurant/
+src/main/java/com/restaurant/
 ├── Main.java
-├── builder/     # Builder roles and order application/web infrastructure
-├── factory/     # Product and creator hierarchies
-├── strategy/    # Discount contract, strategies and context
-├── bridge/      # Receipt abstractions and renderer implementations
-├── observer/    # Subject, observer contract and subscribers
-└── decorator/   # Component decorators for toppings
+├── builder/
+├── factory/
+├── strategy/
+├── bridge/
+├── observer/
+└── decorator/
 ```
 
-Infrastructure is located in named subpackages beneath `builder` to keep the requested six-package boundary. It should remain separate from Builder role classes. This is a course-specific packaging choice; the web controller is not itself a Builder participant. HTML/CSS/JavaScript resources are not Java classes. Tests belong in the matching pattern package trees under `src/test/java`, and must not introduce an additional production package outside the six.
+Pattern roles have their own subfolders. The order application, DTOs and HTTP adapters sit under `builder` to preserve the course's six-package rule; those adapters are not Builder participants. Tests use the corresponding pattern packages under `src/test/java`.
 
-## Final verification
+## Checks before hand-in
 
-Use the exact commands documented in the repository README. Before submission:
+1. Use the final merged revision. Run the Maven checks, package check and `--demo` commands in README.
+2. Demonstrate FAMILY pricing, herbs, customer/kitchen receipts in text, HTML and JSON, and all three observer audiences.
+3. Check that the report, screenshots, UML and source ZIP match the submitted revision. See [VALIDATION.md](VALIDATION.md) for verification evidence.
+4. Each student submits the PDF, source ZIP and repository link before the course deadline and verifies their own upload.
 
-1. Run the Maven verification suite and the integrated `--demo` mode on Java 21.
-2. Demonstrate the live menu, topping selection, discount calculation, order creation, status transitions and both receipt purposes/formats.
-3. Check the Java package tree and the UML against the actual code after teammates' changes.
-4. Inspect `git shortlog -sne --all` and the relevant commits. Counts alone do not prove meaningful contributions; review changed code and tests.
-5. Merge reviewed teammate work while preserving its original authors. Confirm that the final source ZIP corresponds to the submitted repository revision.
-6. Refresh the report's screenshots, code excerpts, contribution statement and test results against that final revision.
-7. Each student submits the PDF, source ZIP and repository link in Moodle and verifies successful upload before the course deadline.
+The app is a demonstration: no real payment or kitchen service is connected, and session data is lost after expiry or server restart. Hosting the site supports the defense; it does not replace the submission files.
 
-Deployment is requested by the team for demonstration. It is additional to the PDF's submission requirements. Demo orders and payment simulation must be described accurately; the application does not process real payments.
-
-## Grading stated by the course
+## Grading
 
 | Component | Weight |
 | --- | ---: |
-| Submitted project code and Git link | 50% |
-| Submitted project report | 10% |
-| Defense: OOP and design patterns | 40% |
+| Project code and Git link | 50% |
+| Project report | 10% |
+| Defense: OOP and patterns | 40% |
 
-The additional instructions state a **5% deduction for any violation**, including violations of the core PDF requirements. This document records the supplied rule; it does not predict the lecturer's final assessment.
+The additional instructions state a 5% deduction per violation, including core PDF requirements.

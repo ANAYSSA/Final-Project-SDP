@@ -1,27 +1,30 @@
 @startuml
 !pragma layout smetana
 skinparam backgroundColor #FFFFFF
+skinparam monochrome true
+skinparam defaultFontColor #000000
+hide circle
 skinparam shadowing false
-skinparam roundcorner 8
+skinparam roundcorner 0
 skinparam defaultFontName SansSerif
 skinparam defaultFontSize 16
-skinparam ArrowColor #59636E
+skinparam ArrowColor #000000
 skinparam ArrowThickness 1.5
 skinparam classAttributeIconSize 0
-skinparam classBackgroundColor #FAF7F0
-skinparam classBorderColor #314047
-skinparam classFontColor #223139
-skinparam stereotypeFontColor #9A4F28
-skinparam noteBackgroundColor #F8E9D6
-skinparam noteBorderColor #D8B794
+skinparam classBackgroundColor #FFFFFF
+skinparam classBorderColor #000000
+skinparam classFontColor #000000
+skinparam stereotypeFontColor #000000
+skinparam noteBackgroundColor #FFFFFF
+skinparam noteBorderColor #000000
 skinparam noteFontSize 14
 skinparam titleFontSize 24
-skinparam titleFontColor #223139
+skinparam titleFontColor #000000
 skinparam packageStyle rectangle
 skinparam packageBackgroundColor #FFFFFF
-skinparam packageBorderColor #C8CED1
+skinparam packageBorderColor #000000
 hide empty members
-title Builder — validated, immutable order
+title Builder - validated, immutable order
 left to right direction
 class "Order.Builder" as Builder <<builder>> {
   - items : List<OrderLine>

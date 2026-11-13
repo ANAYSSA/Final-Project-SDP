@@ -1,22 +1,25 @@
 @startuml
 skinparam backgroundColor #FFFFFF
+skinparam monochrome true
+skinparam defaultFontColor #000000
+hide circle
 skinparam shadowing false
-skinparam roundcorner 8
+skinparam roundcorner 0
 skinparam defaultFontName SansSerif
 skinparam defaultFontSize 18
-skinparam ArrowColor #59636E
+skinparam ArrowColor #000000
 skinparam ArrowThickness 1.5
 skinparam titleFontSize 24
-skinparam titleFontColor #223139
-skinparam sequenceParticipantBackgroundColor #FAF7F0
-skinparam sequenceParticipantBorderColor #314047
-skinparam sequenceLifeLineBorderColor #A5AFB4
-skinparam sequenceGroupBackgroundColor #FAF7F0
-skinparam noteBackgroundColor #F8E9D6
-skinparam noteBorderColor #D8B794
+skinparam titleFontColor #000000
+skinparam sequenceParticipantBackgroundColor #FFFFFF
+skinparam sequenceParticipantBorderColor #000000
+skinparam sequenceLifeLineBorderColor #000000
+skinparam sequenceGroupBackgroundColor #FFFFFF
+skinparam noteBackgroundColor #FFFFFF
+skinparam noteBorderColor #000000
 skinparam maxMessageSize 220
 hide footbox
-title Integrated flow — one order, six cooperating patterns
+title Integrated flow - one order, six cooperating patterns
 participant OrderService as Service
 participant MenuCatalog as Menu
 participant ToppingCatalog as Toppings
@@ -41,31 +44,36 @@ end note
 Service -> Toppings : add(meal, toppingId)
 note right of Toppings
 Decorator: returns a Meal wrapper.
+Herbs is a registered topping (+150 KZT).
 end note
 Service -> Builder : addItem(line); build()
 note right of Builder
 Builder creates Order; its constructor calls
 PricingCalculator.calculate(...), which invokes
 DiscountStrategy.discount(...).
+FAMILY selects 15% off a subtotal >= 6000 KZT.
 end note
 Builder --> Service : immutable Order
 end
 
 group Notify subscribers
-Service -> Progress : subscribe(customer); subscribe(kitchen); announce()
+Service -> Progress : subscribe(customer); subscribe(kitchen);\nsubscribe(operations); announce()
 Progress -> Observer : onStatusChanged(PLACED) for each subscriber
 Observer --> Progress : OrderNotification
 Service -> Progress : advance() on explicit demo action
 note right of Progress
 advance() validates the next status,
 then notifies the same subscribers again.
+Operations receives reference, status and item quantity.
+The order view separates its operationsEvents projection.
 end note
 end
 
 group Render a receipt — Bridge
 note over Document, Renderer
-CustomerReceipt or KitchenTicket uses either
-TextReceiptRenderer or HtmlReceiptRenderer.
+CustomerReceipt or KitchenTicket uses
+TextReceiptRenderer, HtmlReceiptRenderer
+or JsonReceiptRenderer.
 end note
 Service -> Document : render(order, status)
 Document -> Renderer : render(ReceiptContent)

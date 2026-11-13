@@ -1,27 +1,30 @@
 @startuml
 !pragma layout smetana
 skinparam backgroundColor #FFFFFF
+skinparam monochrome true
+skinparam defaultFontColor #000000
+hide circle
 skinparam shadowing false
-skinparam roundcorner 8
+skinparam roundcorner 0
 skinparam defaultFontName SansSerif
 skinparam defaultFontSize 16
-skinparam ArrowColor #59636E
+skinparam ArrowColor #000000
 skinparam ArrowThickness 1.5
 skinparam classAttributeIconSize 0
-skinparam classBackgroundColor #FAF7F0
-skinparam classBorderColor #314047
-skinparam classFontColor #223139
-skinparam stereotypeFontColor #9A4F28
-skinparam noteBackgroundColor #F8E9D6
-skinparam noteBorderColor #D8B794
+skinparam classBackgroundColor #FFFFFF
+skinparam classBorderColor #000000
+skinparam classFontColor #000000
+skinparam stereotypeFontColor #000000
+skinparam noteBackgroundColor #FFFFFF
+skinparam noteBorderColor #000000
 skinparam noteFontSize 14
 skinparam titleFontSize 24
-skinparam titleFontColor #223139
+skinparam titleFontColor #000000
 skinparam packageStyle rectangle
 skinparam packageBackgroundColor #FFFFFF
-skinparam packageBorderColor #C8CED1
+skinparam packageBorderColor #000000
 hide empty members
-title Observer — order status notifications
+title Observer - order status notifications
 left to right direction
 class OrderProgress <<subject>> {
   - observers : Set<OrderObserver>
@@ -37,6 +40,9 @@ interface OrderObserver <<observer>> {
 }
 class CustomerObserver <<concrete observer>>
 class KitchenObserver <<concrete observer>>
+class OperationsDashboardObserver <<concrete observer>> {
+  - itemQuantity : int
+}
 class StatusChange <<record>> {
   + orderId() : UUID
   + status() : OrderStatus
@@ -50,6 +56,7 @@ class OrderNotification <<record>> {
 OrderProgress "1" o--> "0..*" OrderObserver : notifies
 OrderObserver <|.. CustomerObserver
 OrderObserver <|.. KitchenObserver
+OrderObserver <|.. OperationsDashboardObserver
 OrderProgress ..> StatusChange : publishes
 OrderObserver ..> StatusChange : receives
 OrderObserver ..> OrderNotification : returns
@@ -57,6 +64,7 @@ OrderProgress --> OrderNotification : stores event history
 note bottom of OrderProgress
 PLACED → PREPARING → READY → COMPLETED
 Invalid transitions fail before notification.
-Notifications stay inside the application.
+Customer/kitchen events and operations events
+are projected into the same session-owned order view.
 end note
 @enduml

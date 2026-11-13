@@ -115,9 +115,9 @@ settings, downloaded dependencies, generated JARs, or logs belong in this PR.
 
 ## Implementation commits
 
-- Decorator: `1a5b0716c360b9406d0b5a3abea7380eb91d680e` — Herbs metadata,
+- Decorator: `f51cc9c844fa05bbd19b67fc152fb48b0d0ce1d3` — Herbs metadata,
   decorator, registration, and unit/API coverage.
-- Observer: `67abc2aa28a7934743811b098acc2beca18cf047` — Operations subscriber,
+- Observer: `b2e5b55f56229b60914cacccc9ddc0f1d9aa03ed` — Operations subscriber,
   session projection, UI/demo integration, and lifecycle/privacy/retry tests.
 
 Before committing, Git author configuration was inspected as
