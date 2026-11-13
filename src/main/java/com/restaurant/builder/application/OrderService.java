@@ -50,6 +50,8 @@ public final class OrderService {
             OrderProgress progress = new OrderProgress(order.id());
             progress.subscribe(new CustomerObserver());
             progress.subscribe(new KitchenObserver());
+            int itemQuantity = order.items().stream().mapToInt(OrderLine::quantity).sum();
+            progress.subscribe(new OperationsDashboardObserver(itemQuantity));
             progress.announce();
             StoredOrder stored = new StoredOrder(order, progress, request);
             book.add(stored);
