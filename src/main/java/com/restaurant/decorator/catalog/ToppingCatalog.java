@@ -12,7 +12,8 @@ public final class ToppingCatalog {
     private final List<Topping> toppings = java.util.Arrays.stream(com.restaurant.decorator.component.ToppingType.values())
         .map(type -> new Topping(type.id(), type.displayName(), type.price())).toList();
     private final Map<String, UnaryOperator<Meal>> decorators = Map.of(
-        "cheese", ExtraCheese::new, "mushrooms", Mushrooms::new, "olives", Olives::new);
+        "cheese", ExtraCheese::new, "mushrooms", Mushrooms::new, "olives", Olives::new,
+        "herbs", HerbsDecorator::new);
     public List<Topping> items() { return toppings; }
     public Meal add(Meal meal, String id) {
         UnaryOperator<Meal> decorator = decorators.get(id);
