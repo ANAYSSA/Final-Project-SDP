@@ -221,14 +221,18 @@
       if (Number(order.discount)) { const discount = node('div', 'order-item'); discount.append(node('span', 'muted', 'Discount'), node('strong', '', `−${money(order.discount)}`)); items.append(discount); }
       const total = node('div', 'order-total'); total.append(node('span', '', 'Total'), node('strong', '', money(order.total))); items.append(total);
       if (order.note) items.append(node('p', 'order-note', `Kitchen note: ${order.note}`));
-      const notifications = node('div'); notifications.append(node('h3', 'order-detail-title', 'A word from the kitchen'));
-      const events = node('ul', 'order-notifications');
-      for (const event of [...(order.events || [])].reverse()) {
-        const entry = node('li'); entry.append(node('strong', '', event.audience), node('span', '', event.message));
-        const time = node('time', '', formatDate(event.occurredAt)); time.dateTime = event.occurredAt; entry.append(time); events.append(entry);
+      const notifications = node('div');
+      for (const [title, messages] of [['A word from the kitchen', order.events], ['Operations dashboard', order.operationsEvents]]) {
+        if (!messages?.length) continue;
+        notifications.append(node('h3', 'order-detail-title', title));
+        const events = node('ul', 'order-notifications');
+        for (const event of [...messages].reverse()) {
+          const entry = node('li'); entry.append(node('strong', '', event.audience), node('span', '', event.message));
+          const time = node('time', '', formatDate(event.occurredAt)); time.dateTime = event.occurredAt; entry.append(time); events.append(entry);
+        }
+        notifications.append(events);
       }
-      if (!order.events?.length) events.append(node('li', '', 'Your order has been received.'));
-      notifications.append(events); details.append(items, notifications); article.append(details);
+      details.append(items, notifications); article.append(details);
       const footer = node('div', 'order-card-footer'); const receipts = node('div', 'receipt-links');
       for (const [type, label] of [['customer', 'Your receipt'], ['kitchen', 'Kitchen ticket']]) {
         for (const format of ['html', 'text']) {
