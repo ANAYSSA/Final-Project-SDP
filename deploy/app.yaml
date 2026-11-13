@@ -1,0 +1,18 @@
+# Optional App Platform alternative. The active deployment uses the existing Droplet.
+name: hearth-and-table
+services:
+  - name: restaurant
+    git:
+      repo_clone_url: https://github.com/ANAYSSA/Final-Project-SDP.git
+      branch: main
+    dockerfile_path: Dockerfile
+    http_port: 8080
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    health_check:
+      http_path: /api/health
+    envs:
+      - key: SERVER_FORWARD_HEADERS_STRATEGY
+        value: framework
+      - key: SERVER_SERVLET_SESSION_COOKIE_SECURE
+        value: 'true'

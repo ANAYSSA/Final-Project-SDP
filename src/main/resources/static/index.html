@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4ec">
+  <meta name="description" content="Hearth & Table — a thoughtfully made restaurant ordering demo. Choose a favourite, make it yours, and follow every step.">
+  <title>Hearth & Table · Made to gather</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#menu" class="brand" aria-label="Hearth and Table home"><span class="brand-mark" aria-hidden="true">h<span>&</span>t</span><span class="brand-name">hearth <i>&</i> table<span class="brand-caption">GOOD FOOD. GOOD COMPANY.</span></span></a>
+      <nav aria-label="Main navigation">
+        <a href="#menu" data-view="menu" class="nav-link active" aria-current="page">Our menu</a>
+        <a href="#orders" data-view="orders" class="nav-link">My orders <span id="order-count" class="nav-count" hidden>0</span></a>
+        <a href="#about" data-view="about" class="nav-link">The project</a>
+      </nav>
+      <a href="#your-order" class="header-cart" aria-label="View your basket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 8h14l-1 13H6L5 8Z M8 8V6a4 4 0 0 1 8 0v2"/></svg><span id="basket-count">0</span></a>
+    </div>
+  </header>
+  <main id="main">
+    <section id="view-menu" class="view">
+      <div class="hero page-width">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="small-sun" aria-hidden="true">✳</span> MADE FRESH. SHARED HAPPILY.</div>
+          <h1>A little comfort.<br>A lot of <em>flavour.</em></h1>
+          <p>From a golden crust to the last twirl of pasta.<br>Find your favourite. Make it your own.</p>
+          <a href="#menu-list" class="text-link">Something good is on the menu <span aria-hidden="true">↘</span></a>
+          <div class="hero-details"><span><span class="dot" aria-hidden="true"></span> Freshly prepared</span><span>Dine in or take away</span><span>Prices in KZT</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true"><img src="/assets/hero.svg" alt=""><span class="hero-stamp">FROM OUR<br><strong>hearth</strong><br>TO YOUR TABLE</span><span class="hero-caption">THE CLASSICS, MADE WITH CARE.</span></div>
+      </div>
+      <div class="menu-layout page-width">
+        <section class="menu-section" id="menu-list" aria-labelledby="menu-heading">
+          <div class="section-heading"><div><span class="eyebrow">PULL UP A CHAIR</span><h2 id="menu-heading">The menu<span class="orange-period">.</span></h2></div><span id="menu-result-count" class="muted"></span></div>
+          <div class="menu-toolbar"><div class="category-tabs" role="group" aria-label="Menu category"><button type="button" class="category active" data-category="ALL" aria-pressed="true">All dishes</button><button type="button" class="category" data-category="PIZZA" aria-pressed="false">Pizza</button><button type="button" class="category" data-category="PASTA" aria-pressed="false">Pasta</button><button type="button" class="category" data-category="DRINK" aria-pressed="false">Drinks</button></div><label class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><span class="sr-only">Search dishes</span><input id="menu-search" type="search" placeholder="Find a favourite…" autocomplete="off"></label></div>
+          <div id="menu-error" class="error-box" role="alert" hidden></div>
+          <div id="menu-grid" class="menu-grid" aria-live="polite"><div class="loading-state">Warming up the kitchen…</div></div>
+          <div class="menu-note"><span aria-hidden="true">✳</span><p><strong>Made a little more you.</strong> Add extra cheese, mushrooms or olives to any pizza or pasta. Please ask the restaurant about allergens before ordering real food.</p></div>
+        </section>
+        <aside id="your-order" class="cart-panel" aria-labelledby="cart-heading">
+          <div class="cart-heading"><div><span class="eyebrow">SOMETHING TO LOOK FORWARD TO</span><h2 id="cart-heading">Your table awaits.</h2></div><span id="cart-line-count" class="cart-count">0</span></div>
+          <div id="cart-lines"><div class="empty-cart"><span class="empty-plate" aria-hidden="true"><span>✳</span></span><h3>Good things start here.</h3><p>Add a dish from the menu<br>and make yourself at home.</p></div></div>
+          <form id="checkout-form" hidden>
+            <fieldset class="fulfillment-field"><legend>How are we serving you?</legend><div class="segmented"><label><input type="radio" name="fulfillment" value="DINE_IN" checked><span>Dine in</span></label><label><input type="radio" name="fulfillment" value="TAKEAWAY"><span>Take away</span></label></div></fieldset>
+            <div class="checkout-fields"><label for="customer-name">Your name<input id="customer-name" name="customerName" autocomplete="given-name" placeholder="e.g. Anuar" minlength="2" maxlength="60" required></label><label id="table-field" for="table-number"><span id="table-label">Table</span><select id="table-number" name="tableNumber" aria-labelledby="table-label" required></select></label></div>
+            <label class="field-label">A little something off<select id="discount-code" name="discountCode"><option value="NONE">No discount</option></select></label>
+            <p id="discount-hint" class="field-hint"></p>
+            <label class="field-label">A note for the kitchen <span class="optional">optional</span><textarea id="order-note" name="note" maxlength="300" rows="2" placeholder="Anything we should know?"></textarea></label>
+            <div class="order-totals" aria-live="polite"><div><span>Subtotal</span><span id="quote-subtotal">—</span></div><div id="discount-row" hidden><span>Discount</span><span id="quote-discount">—</span></div><div class="grand-total"><span>Total</span><strong id="quote-total">—</strong></div></div>
+            <div id="checkout-error" class="error-box" role="alert" hidden></div>
+            <button id="place-order" type="submit" class="button button-primary" disabled><span>Place my order</span><span aria-hidden="true">↗</span></button>
+            <p class="demo-note">A restaurant demo. No payment is collected.</p>
+          </form>
+          <div class="cart-footer"><span aria-hidden="true">♡</span> Good food tastes better together.</div>
+        </aside>
+      </div>
+    </section>
+    <section id="view-orders" class="view page-width secondary-view" hidden aria-labelledby="orders-heading">
+      <div class="section-heading"><div><span class="eyebrow">FROM OUR KITCHEN TO YOU</span><h1 id="orders-heading">Your orders<span class="orange-period">.</span></h1><p class="section-description">Every delicious detail, all in one place.</p></div><button id="refresh-orders" class="button button-outline" type="button">Refresh orders <span aria-hidden="true">↻</span></button></div>
+      <p class="session-note">Orders belong to this browser session. This is a student demo: use “Advance demo status” to simulate the kitchen. Orders reset when the server restarts.</p>
+      <div id="orders-error" class="error-box" role="alert" hidden></div>
+      <div id="orders-list" aria-live="polite"></div>
+    </section>
+    <section id="view-about" class="view page-width secondary-view" hidden aria-labelledby="about-heading">
+      <div class="about-intro"><span class="eyebrow">THE IDEAS BEHIND THE EXPERIENCE</span><h1 id="about-heading">Six patterns.<br>One shared table<span class="orange-period">.</span></h1><p>A Restaurant Ordering System built with Java, Spring Boot and a small, purposeful web interface. Each design pattern has a real job in the journey from menu to order.</p></div>
+      <div class="pattern-grid">
+        <article class="pattern-card"><span class="pattern-number">01 / CREATIONAL</span><h2>Factory Method</h2><p>Specialised creators produce pizza, pasta and drink objects through a shared meal interface.</p><span class="pattern-owner">Anuar · Menu creation</span></article>
+        <article class="pattern-card"><span class="pattern-number">02 / CREATIONAL</span><h2>Builder</h2><p>Assembles a valid, immutable order step by step with the customer, dishes and service details.</p><span class="pattern-owner">Anuar · Order assembly</span></article>
+        <article class="pattern-card"><span class="pattern-number">03 / BEHAVIORAL</span><h2>Strategy</h2><p>Changes the discount calculation at checkout: standard, student or takeaway pricing.</p><span class="pattern-owner">Akmaral · Pricing</span></article>
+        <article class="pattern-card"><span class="pattern-number">04 / STRUCTURAL</span><h2>Bridge</h2><p>Separates the type of receipt from its format. Customer and kitchen documents both support text and HTML.</p><span class="pattern-owner">Akmaral · Receipts</span></article>
+        <article class="pattern-card"><span class="pattern-number">05 / BEHAVIORAL</span><h2>Observer</h2><p>Notifies the customer and kitchen when an order changes status, without coupling the order to its listeners.</p><span class="pattern-owner">Mukhammad · Notifications</span></article>
+        <article class="pattern-card"><span class="pattern-number">06 / STRUCTURAL</span><h2>Decorator</h2><p>Wraps a meal in optional toppings, adding their descriptions and prices without changing the original dish.</p><span class="pattern-owner">Mukhammad · Extras</span></article>
+      </div>
+      <div class="about-flow"><span class="eyebrow">A COHESIVE ORDERING JOURNEY</span><p>Choose a meal <span>→</span> Add toppings <span>→</span> Build an order <span>→</span> Apply a discount <span>→</span> Create a receipt <span>→</span> Notify the table</p></div>
+      <a class="text-link" href="https://github.com/ANAYSSA/Final-Project-SDP" target="_blank" rel="noopener noreferrer">Explore the project on GitHub <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+  <footer class="site-footer page-width"><div class="footer-wordmark">hearth <i>&</i> table</div><span>Made to gather. Built to learn.</span><span>Restaurant Ordering System · SDP Final Project</span></footer>
+  <dialog id="customize-dialog" aria-labelledby="dialog-title">
+    <form id="customize-form"><div class="dialog-top"><span class="eyebrow">MAKE IT YOUR OWN</span><button id="close-dialog" class="icon-button" type="button" aria-label="Close dish customisation">×</button></div><img id="dialog-image" class="dialog-image" src="/assets/margherita.svg" alt=""><h2 id="dialog-title"></h2><p id="dialog-description" class="muted"></p><fieldset id="toppings-field"><legend>A little extra?</legend><div id="topping-options"></div></fieldset><div class="dialog-bottom"><div class="quantity-control"><button id="dialog-minus" type="button" aria-label="Decrease dish quantity">−</button><input id="dialog-quantity" type="number" min="1" max="10" value="1" aria-label="Dish quantity" required><button id="dialog-plus" type="button" aria-label="Increase dish quantity">+</button></div><strong id="dialog-price"></strong></div><button id="add-to-cart" class="button button-primary" type="submit">Add to my order <span aria-hidden="true">+</span></button></form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

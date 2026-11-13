@@ -1,0 +1,45 @@
+services:
+  restaurant:
+    image: eclipse-temurin:21-jre-alpine
+    restart: unless-stopped
+    user: '10001:10001'
+    working_dir: /app
+    command: ['java', '-Xms32m', '-Xmx128m', '-XX:MaxMetaspaceSize=112m', '-XX:ReservedCodeCacheSize=32m', '-Xss512k', '-XX:+UseSerialGC', '-jar', '/app/app.jar']
+    volumes:
+      - ./app.jar:/app/app.jar:ro
+    environment:
+      PORT: '8080'
+      SERVER_FORWARD_HEADERS_STRATEGY: framework
+      SERVER_SERVLET_SESSION_COOKIE_SECURE: 'true'
+    mem_limit: 320m
+    pids_limit: 100
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: '2'
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    mem_limit: 96m
+    pids_limit: 80
+    depends_on:
+      - restaurant
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: '2'
+volumes:
+  caddy_data:
+  caddy_config:

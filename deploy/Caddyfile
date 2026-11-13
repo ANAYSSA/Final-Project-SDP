@@ -1,0 +1,13 @@
+hearth-table.178.62.244.88.sslip.io {
+    encode zstd gzip
+    request_body {
+        max_size 32KB
+    }
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        Referrer-Policy strict-origin-when-cross-origin
+        -Server
+    }
+    reverse_proxy restaurant:8080
+}
