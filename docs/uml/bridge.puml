@@ -1,0 +1,59 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ArrowColor #59636E
+skinparam ArrowThickness 1.5
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #FAF7F0
+skinparam classBorderColor #314047
+skinparam classFontColor #223139
+skinparam stereotypeFontColor #9A4F28
+skinparam noteBackgroundColor #F8E9D6
+skinparam noteBorderColor #D8B794
+skinparam noteFontSize 14
+skinparam titleFontSize 24
+skinparam titleFontColor #223139
+skinparam packageStyle rectangle
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #C8CED1
+hide empty members
+title Bridge — receipt purpose × output format
+left to right direction
+abstract class ReceiptDocument <<abstraction>> {
+  - renderer : ReceiptRenderer
+  + render(order, status) : String
+  + contentType() : String
+  # content(order, status) : ReceiptContent
+}
+class CustomerReceipt <<refined abstraction>> {
+  # content(order, status) : ReceiptContent
+}
+class KitchenTicket <<refined abstraction>> {
+  # content(order, status) : ReceiptContent
+}
+interface ReceiptRenderer <<implementor>> {
+  + render(content) : String
+  + contentType() : String
+}
+class TextReceiptRenderer <<concrete implementor>>
+class HtmlReceiptRenderer <<concrete implementor>>
+class ReceiptContent <<record>> {
+  + title() : String
+  + lines() : List<String>
+}
+ReceiptDocument <|-- CustomerReceipt
+ReceiptDocument <|-- KitchenTicket
+ReceiptDocument o--> ReceiptRenderer : delegates formatting
+ReceiptRenderer <|.. TextReceiptRenderer
+ReceiptRenderer <|.. HtmlReceiptRenderer
+ReceiptDocument ..> ReceiptContent : produces
+ReceiptRenderer ..> ReceiptContent : consumes
+note bottom of ReceiptDocument
+Two document purposes use either format.
+Purpose and format vary independently.
+end note
+@enduml

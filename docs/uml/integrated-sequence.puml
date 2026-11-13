@@ -1,0 +1,75 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 18
+skinparam ArrowColor #59636E
+skinparam ArrowThickness 1.5
+skinparam titleFontSize 24
+skinparam titleFontColor #223139
+skinparam sequenceParticipantBackgroundColor #FAF7F0
+skinparam sequenceParticipantBorderColor #314047
+skinparam sequenceLifeLineBorderColor #A5AFB4
+skinparam sequenceGroupBackgroundColor #FAF7F0
+skinparam noteBackgroundColor #F8E9D6
+skinparam noteBorderColor #D8B794
+skinparam maxMessageSize 220
+hide footbox
+title Integrated flow — one order, six cooperating patterns
+participant OrderService as Service
+participant MenuCatalog as Menu
+participant ToppingCatalog as Toppings
+participant "Order.Builder" as Builder
+participant OrderProgress as Progress
+participant OrderObserver as Observer
+participant ReceiptDocument as Document
+participant ReceiptRenderer as Renderer
+
+note over Service
+Selected calls; HTTP, session and storage omitted.
+Item/topping calls repeat for each requested item.
+end note
+
+group Create and price the order
+Service -> Builder : new Builder() + configuration
+Service -> Menu : create(menuItemId)
+note right of Menu
+Factory Method: MenuCatalog selects MealFactory;
+create() delegates to createMeal().
+end note
+Service -> Toppings : add(meal, toppingId)
+note right of Toppings
+Decorator: returns a Meal wrapper.
+end note
+Service -> Builder : addItem(line); build()
+note right of Builder
+Builder creates Order; its constructor calls
+PricingCalculator.calculate(...), which invokes
+DiscountStrategy.discount(...).
+end note
+Builder --> Service : immutable Order
+end
+
+group Notify subscribers
+Service -> Progress : subscribe(customer); subscribe(kitchen); announce()
+Progress -> Observer : onStatusChanged(PLACED) for each subscriber
+Observer --> Progress : OrderNotification
+Service -> Progress : advance() on explicit demo action
+note right of Progress
+advance() validates the next status,
+then notifies the same subscribers again.
+end note
+end
+
+group Render a receipt — Bridge
+note over Document, Renderer
+CustomerReceipt or KitchenTicket uses either
+TextReceiptRenderer or HtmlReceiptRenderer.
+end note
+Service -> Document : render(order, status)
+Document -> Renderer : render(ReceiptContent)
+Renderer --> Document : formatted String
+Document --> Service : formatted String
+end
+@enduml

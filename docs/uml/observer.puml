@@ -1,0 +1,62 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ArrowColor #59636E
+skinparam ArrowThickness 1.5
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #FAF7F0
+skinparam classBorderColor #314047
+skinparam classFontColor #223139
+skinparam stereotypeFontColor #9A4F28
+skinparam noteBackgroundColor #F8E9D6
+skinparam noteBorderColor #D8B794
+skinparam noteFontSize 14
+skinparam titleFontSize 24
+skinparam titleFontColor #223139
+skinparam packageStyle rectangle
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #C8CED1
+hide empty members
+title Observer — order status notifications
+left to right direction
+class OrderProgress <<subject>> {
+  - observers : Set<OrderObserver>
+  - status : OrderStatus
+  + subscribe(observer)
+  + unsubscribe(observer)
+  + announce()
+  + advance()
+  - notifyObservers()
+}
+interface OrderObserver <<observer>> {
+  + onStatusChanged(change) : OrderNotification
+}
+class CustomerObserver <<concrete observer>>
+class KitchenObserver <<concrete observer>>
+class StatusChange <<record>> {
+  + orderId() : UUID
+  + status() : OrderStatus
+  + occurredAt() : Instant
+}
+class OrderNotification <<record>> {
+  + status() : OrderStatus
+  + message() : String
+  + audience() : String
+}
+OrderProgress "1" o--> "0..*" OrderObserver : notifies
+OrderObserver <|.. CustomerObserver
+OrderObserver <|.. KitchenObserver
+OrderProgress ..> StatusChange : publishes
+OrderObserver ..> StatusChange : receives
+OrderObserver ..> OrderNotification : returns
+OrderProgress --> OrderNotification : stores event history
+note bottom of OrderProgress
+PLACED → PREPARING → READY → COMPLETED
+Invalid transitions fail before notification.
+Notifications stay inside the application.
+end note
+@enduml

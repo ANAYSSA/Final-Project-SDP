@@ -1,0 +1,66 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ArrowColor #59636E
+skinparam ArrowThickness 1.5
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #FAF7F0
+skinparam classBorderColor #314047
+skinparam classFontColor #223139
+skinparam stereotypeFontColor #9A4F28
+skinparam noteBackgroundColor #F8E9D6
+skinparam noteBorderColor #D8B794
+skinparam noteFontSize 14
+skinparam titleFontSize 24
+skinparam titleFontColor #223139
+skinparam packageStyle rectangle
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #C8CED1
+hide empty members
+title Strategy — interchangeable pricing rules
+left to right direction
+class PricingCalculator <<context>> {
+  + calculate(lines, fulfillment, strategy) : Pricing
+}
+interface DiscountStrategy <<strategy>> {
+  + code() : String
+  + discount(subtotal, fulfillment) : BigDecimal
+}
+class NoDiscount <<concrete strategy>> {
+  + discount(...) : BigDecimal
+}
+class StudentDiscount <<concrete strategy>> {
+  + discount(...) : BigDecimal
+}
+class PickupDiscount <<concrete strategy>> {
+  + discount(...) : BigDecimal
+}
+class DiscountCatalog <<registry>> {
+  + find(code) : DiscountStrategy
+}
+class Pricing <<record>> {
+  + subtotal() : BigDecimal
+  + discount() : BigDecimal
+  + total() : BigDecimal
+  + currency() : String
+}
+PricingCalculator ..> DiscountStrategy : accepts and delegates
+DiscountStrategy <|.. NoDiscount
+DiscountStrategy <|.. StudentDiscount
+DiscountStrategy <|.. PickupDiscount
+DiscountCatalog --> DiscountStrategy : looks up by code
+PricingCalculator ..> Pricing : returns
+note bottom of PickupDiscount
+NONE: no discount; STUDENT: 10%.
+PICKUP: 20%, valid only for TAKEAWAY.
+Invalid eligibility fails explicitly.
+end note
+note bottom of PricingCalculator
+BigDecimal, scale 2, HALF_UP.
+A strategy is supplied per calculation.
+end note
+@enduml

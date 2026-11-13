@@ -1,0 +1,69 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ArrowColor #59636E
+skinparam ArrowThickness 1.5
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #FAF7F0
+skinparam classBorderColor #314047
+skinparam classFontColor #223139
+skinparam stereotypeFontColor #9A4F28
+skinparam noteBackgroundColor #F8E9D6
+skinparam noteBorderColor #D8B794
+skinparam noteFontSize 14
+skinparam titleFontSize 24
+skinparam titleFontColor #223139
+skinparam packageStyle rectangle
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #C8CED1
+hide empty members
+title Decorator — composable meal toppings
+left to right direction
+interface Meal <<component>> {
+  + id() : String
+  + name() : String
+  + category() : MealCategory
+  + price() : BigDecimal
+}
+abstract class BaseMeal <<base product>>
+class Pizza <<concrete component>>
+class Pasta <<concrete component>>
+abstract class ToppingDecorator <<decorator>> {
+  # wrapped : Meal
+  - toppingName : String
+  - extraPrice : BigDecimal
+  + price() : BigDecimal
+  + name() : String
+}
+class ExtraCheese <<concrete decorator>> {
+  + ExtraCheese(meal)
+}
+class Mushrooms <<concrete decorator>> {
+  + Mushrooms(meal)
+}
+class Olives <<concrete decorator>> {
+  + Olives(meal)
+}
+Meal <|.. BaseMeal
+BaseMeal <|-- Pizza
+BaseMeal <|-- Pasta
+Meal <|.. ToppingDecorator
+ToppingDecorator o--> Meal : wraps one component
+ToppingDecorator <|-- ExtraCheese
+ToppingDecorator <|-- Mushrooms
+ToppingDecorator <|-- Olives
+note bottom of ToppingDecorator
+price = wrapped.price + extraPrice
+Identity and category are delegated.
+Metadata comes from ToppingType.
+Drinks reject toppings.
+end note
+note bottom of ExtraCheese
+Cheese +400 KZT; mushrooms +300;
+olives +250 per decorated unit.
+end note
+@enduml

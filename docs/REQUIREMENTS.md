@@ -27,8 +27,8 @@ The initial integrated baseline is committed under Anuar's configured Git identi
 | Additional | Clean Code, SOLID, KISS and DRY | Explain specific classes and extension points; use the examples in the defense guide instead of unsupported compliance claims |
 | Additional | Correct package hierarchy; six pattern packages; only `Main` outside | Check production Java sources: `com.restaurant.Main` is the only class at the package root; other classes belong under the six pattern packages and role subpackages |
 | Additional | Git repository with all members' commit histories | Public repository: https://github.com/ANAYSSA/Final-Project-SDP ; inspect authors and substantive changes after merging teammates' branches |
-| PDF, page 1 | Report includes introduction, body, conclusion and further work | Check the final report's contents before submission |
-| PDF, page 1 | Report includes Java/Go code, application screenshots and UML diagrams | Include Java excerpts tied to the real classes, screenshots of the running application and readable class/interaction diagrams |
+| PDF, page 1 | Report includes introduction, body, conclusion and further work | [REPORT.pdf](REPORT.pdf), 15 pages; update after teammate changes |
+| PDF, page 1 | Report includes Java/Go code, application screenshots and UML diagrams | Java excerpts and real screenshots in the report; six class diagrams and one sequence in [uml/](uml/README.md) |
 | PDF, page 1 | PDF report and zipped source code uploaded to Moodle | Each student uploads the finished PDF and source ZIP; a GitHub link alone does not replace the ZIP |
 | Additional | Every student submits on time; no late submissions | Each student verifies their own Moodle submission and the course's published deadline |
 | PDF, page 1; grading criteria | Oral defense before teaching staff; OOP and patterns questions | Each student rehearses their two assigned patterns and the complete application flow |
