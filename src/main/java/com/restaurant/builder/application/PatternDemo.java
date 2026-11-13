@@ -29,10 +29,12 @@ public final class PatternDemo {
             if (!service.receipt(order.id(), "html", type, book).body().contains("<!doctype html>")) throw new IllegalStateException("HTML receipt failed");
             if (!service.receipt(order.id(), "json", type, book).body().startsWith("{\"title\":")) throw new IllegalStateException("JSON receipt failed");
         }
-        System.out.println("6. Observer: kitchen and customer receive every status transition.");
+        System.out.println("6. Observer: kitchen, customer and operations receive every status transition.");
         for (int step = 0; step < 3; step++) order = service.advance(order.id(), book);
         order.events().forEach(event -> System.out.println(event.audience() + " / " + event.status() + ": " + event.message()));
-        if (order.events().size() != 8 || order.total().compareTo(new java.math.BigDecimal("4240.00")) != 0)
+        order.operationsEvents().forEach(event -> System.out.println(event.audience() + " / " + event.status() + ": " + event.message()));
+        if (order.events().size() != 8 || order.operationsEvents().size() != 4
+                || order.total().compareTo(new java.math.BigDecimal("4240.00")) != 0)
             throw new IllegalStateException("Integrated demonstration did not match expected results");
         System.out.println("PASS — all six patterns exercised successfully.");
     }

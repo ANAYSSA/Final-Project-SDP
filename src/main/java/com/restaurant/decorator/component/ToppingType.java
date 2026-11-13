@@ -6,7 +6,8 @@ import java.math.BigDecimal;
 public enum ToppingType {
     CHEESE("cheese", "Extra cheese", "400.00"),
     MUSHROOMS("mushrooms", "Mushrooms", "300.00"),
-    OLIVES("olives", "Olives", "250.00");
+    OLIVES("olives", "Olives", "250.00"),
+    HERBS("herbs", "Herbs", "150.00");
     private final String id;
     private final String displayName;
     private final BigDecimal price;
