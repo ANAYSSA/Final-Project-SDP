@@ -182,6 +182,8 @@
   function closeCustomize() { $('#customize-dialog').close(); }
   function updateDialogPrice() {
     const raw = Number($('#dialog-quantity').value); const quantity = Number.isInteger(raw) && raw >= 1 && raw <= 10 ? raw : 1;
+    const selectedToppings = $$('#topping-options input:checked').length;
+    $$('#topping-options input').forEach((input) => { input.disabled = !input.checked && selectedToppings >= 3; });
     const extras = $$('#topping-options input:checked').reduce((sum, input) => sum + Number(state.menu.toppings.find((t) => t.id === input.value).price), 0);
     $('#dialog-price').textContent = money((Number(state.dialogItem.price) + extras) * quantity);
     $('#dialog-minus').disabled = quantity <= 1; $('#dialog-plus').disabled = quantity >= 10;
@@ -235,7 +237,7 @@
       details.append(items, notifications); article.append(details);
       const footer = node('div', 'order-card-footer'); const receipts = node('div', 'receipt-links');
       for (const [type, label] of [['customer', 'Your receipt'], ['kitchen', 'Kitchen ticket']]) {
-        for (const format of ['html', 'text']) {
+        for (const format of ['html', 'text', 'json']) {
           const link = node('a', '', `${label} · ${format.toUpperCase()}`); link.href = `/api/orders/${encodeURIComponent(order.id)}/receipt?format=${format}&type=${type}`; link.target = '_blank'; link.rel = 'noopener noreferrer'; receipts.append(link);
         }
       }
